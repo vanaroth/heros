@@ -32,7 +32,8 @@ export function Sujet({
 			<div className="message-body">
 				<div className="columns is-mobile">
 					<div className="column is-four-fifths" onClick={addNewSession}>
-						{title} {"  "} <i class="fi fi-plus-a" onClick={addNewSession}></i>
+						{title} {"  "}{" "}
+						<i className="fi fi-plus-a" onClick={addNewSession}></i>
 					</div>
 
 					<div className="column" style={{ textAlign: "right" }}>

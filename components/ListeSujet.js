@@ -54,7 +54,7 @@ export function ListeSujets() {
 					Array.isArray(listeSujets.liste) &&
 					listeSujets.liste.length > 0 &&
 					listeSujets.liste.map((sujet, key) => (
-						<Sujet key={sujet.title} id={key} title={sujet.title} del={del} />
+						<Sujet key={key} id={key} title={sujet.title} del={del} />
 					))}
 				{!Array.isArray(listeSujets) ||
 					(listeSujets.length === 0 && (
@@ -108,6 +108,7 @@ function saveBase(data) {
 }
 
 function getData(key) {
+	console.log("getData key:", key);
 	try {
 		const sujetData = localStorage.getItem(key);
 		const formatedData = JSON.parse(sujetData);

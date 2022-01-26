@@ -9,7 +9,7 @@ function MyApp({ Component, pageProps }) {
 				<meta charSet="utf-8" />
 				<meta
 					name="viewport"
-					content="initial-scale=1.0, width=device-width,maximum-scale=1.0,user-scalable=0 "
+					content="initial-scale=1.0, width=device-width,maximum-scale=1.0,user-scalable=0"
 				/>
 				<link
 					rel="stylesheet"
