@@ -11,7 +11,7 @@ export default function Home() {
 				<div className="hero-body" style={{ textAlign: "center" }}>
 					<p className="title">Héros du quotidien</p>
 					<p className="subtitle">
-						Faire les choses chaque jour pour garder l'esprit libre
+						Faire les choses chaque jour pour garder l&apos;esprit libre
 					</p>
 				</div>
 			</section>
