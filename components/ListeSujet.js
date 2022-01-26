@@ -4,6 +4,8 @@ import { Sujet } from "./Sujet";
 import { InputAdd } from "./InputAdd";
 import { Modal } from "./Modal";
 import { Block } from "./bulma/Block";
+import { AddButton } from "./AddButton";
+import { ActionBar } from "./ActionBar";
 
 export function ListeSujets() {
 	const [listeSujets, setListeSujets] = useState([]);
@@ -60,58 +62,49 @@ export function ListeSujets() {
 	}, [listeSujets]);
 
 	return (
-		<div className="content" style={{ padding: "2em" }}>
-			<div className="block">
-				{listeSujets?.liste &&
-					Array.isArray(listeSujets.liste) &&
-					listeSujets.liste.length > 0 &&
-					listeSujets.liste.map((sujet, key) => (
-						<Sujet key={key} id={key} data={sujet} del={del} update={update} />
-					))}
-				{!Array.isArray(listeSujets) ||
-					(listeSujets.length === 0 && (
-						<div className="message is-info">
-							<div className="message-body"> Liste vide</div>
-						</div>
-					))}
-			</div>
-
-			{!showForm && (
+		<>
+			<div
+				className="content"
+				style={{
+					padding: "2em",
+					marginTop: "25vh",
+					marginBottom: "10vh",
+					height: "75vh",
+					overflowY: "auto",
+				}}>
 				<div className="block">
-					<button className="button" onClick={toggleForm}>
-						<i className="fi fi-plus-a"></i> Sujet
-					</button>
+					{listeSujets?.liste &&
+						Array.isArray(listeSujets.liste) &&
+						listeSujets.liste.length > 0 &&
+						listeSujets.liste.map((sujet, key) => (
+							<Sujet
+								key={key}
+								id={key}
+								data={sujet}
+								del={del}
+								update={update}
+							/>
+						))}
+					{!Array.isArray(listeSujets) ||
+						(listeSujets.length === 0 && (
+							<div className="message is-info">
+								<div className="message-body"> Liste vide</div>
+							</div>
+						))}
 				</div>
-			)}
-
-			<Modal
-				isActive={showForm}
-				Component={() => <SujetForm isVisible={showForm} add={add} />}
-			/>
-		</div>
-	);
-}
-
-function SujetForm({ isVisible = true, add }) {
-	const [data, setData] = useState("");
-	const handleChange = (e) => setData(e.target.value);
-	return (
-		<form className="box" style={{ display: isVisible ? "block" : "none" }}>
-			<Block>
-				<h3 style={{ textAlign: "center" }}>Nouveau Sujet</h3>
-			</Block>
-			<div className="field">
-				<label className="label">Titre du Sujet</label>
-				<InputAdd
-					data={data}
-					setData={setData}
-					onChange={handleChange}
+			</div>
+			<ActionBar>
+				<AddButton
+					title="Sujet"
+					onClick={toggleForm}
+					showForm={showForm}
 					add={add}
 				/>
-			</div>
-		</form>
+			</ActionBar>
+		</>
 	);
 }
+
 function getBase() {
 	return getData("liste_sujets");
 }

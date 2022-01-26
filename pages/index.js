@@ -8,7 +8,9 @@ export default function Home() {
 	moment.locale("fr");
 	return (
 		<div className="container">
-			<section className="block hero is-primary">
+			<section
+				className="block hero is-primary"
+				style={{ position: "fixed", top: 0, zIndex: 999 }}>
 				<div className="hero-body" style={{ textAlign: "center" }}>
 					<p className="title">Héros du quotidien</p>
 					<p className="subtitle">

@@ -7,15 +7,14 @@ export function MenuParams({ idSujet, del }) {
 	return (
 		<div className={"dropdown is-right " + (isActive ? "is-active" : "")}>
 			<div className="dropdown-trigger">
-				<button
-					className="button"
+				<div
 					aria-haspopup="true"
 					aria-controls="dropdown-menu"
 					onClick={toogleActive}>
 					<span className="icon is-small">
 						<i className="fi fi-more-v-a"></i>
 					</span>
-				</button>
+				</div>
 			</div>
 			<div
 				className="dropdown-menu"
