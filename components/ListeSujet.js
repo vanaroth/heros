@@ -29,8 +29,20 @@ export function ListeSujets() {
 				liste: [...filteredList],
 			};
 		});
-		toggleForm();
 	};
+
+	const update = (id, newData) => {
+		setListeSujets((s) => {
+			let oldListe = s.liste || [];
+			oldListe[id] = newData;
+
+			return {
+				...s,
+				liste: [...oldListe],
+			};
+		});
+	};
+
 	const toggleForm = () => setShowForm((s) => !s);
 
 	useEffect(() => {
@@ -54,7 +66,7 @@ export function ListeSujets() {
 					Array.isArray(listeSujets.liste) &&
 					listeSujets.liste.length > 0 &&
 					listeSujets.liste.map((sujet, key) => (
-						<Sujet key={key} id={key} title={sujet.title} del={del} />
+						<Sujet key={key} id={key} data={sujet} del={del} update={update} />
 					))}
 				{!Array.isArray(listeSujets) ||
 					(listeSujets.length === 0 && (

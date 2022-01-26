@@ -5,6 +5,7 @@ import { ListeSujets } from "../components/ListeSujet";
 import { Sujet } from "../components/Sujet";
 
 export default function Home() {
+	moment.locale("fr");
 	return (
 		<div className="container">
 			<section className="block hero is-primary">

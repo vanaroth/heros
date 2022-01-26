@@ -1,39 +1,48 @@
 import { useEffect, useState } from "react";
+import moment from "moment";
 import "bulma/css/bulma.min.css";
 import { MenuParams } from "./MenuParams";
 
 export function Sujet({
 	id = -1,
-	title,
+	data: { title = "", history = [], params = { test: "" }, created = "" },
 	actualStatus = "",
-	addNewSession,
+	update,
 	del,
 	...rest
 }) {
+	moment.locale("fr");
+
 	const [is, setIs] = useState("");
+	const [newHistory, setNewHistory] = useState(history);
 
 	const isSuccess = () => setIs("is-success");
 	const isWarning = () => setIs("is-warning");
 	const isDanger = () => setIs("is-danger");
 
+	useEffect(() => {}, [history, newHistory]);
+
 	useEffect(() => {
-		console.log("Sujet id", id);
-		if (actualStatus === "success") {
-			isSuccess();
-		} else if (actualStatus === "warning") {
-			isWarning();
-		} else if (actualStatus === "danger") {
-			isDanger();
-		}
-	}, [actualStatus]);
+		const newData = { title, hisory: newHistory, params, created };
+		console.log("Sujet data", newData);
+
+		update(id, newData);
+	}, [newHistory]);
 
 	return (
 		<div className={"message " + is} {...rest}>
 			<div className="message-body">
 				<div className="columns is-mobile">
-					<div className="column is-four-fifths" onClick={addNewSession}>
+					<div className="column is-four-fifths">
 						{title} {"  "}{" "}
-						<i className="fi fi-plus-a" onClick={addNewSession}></i>
+						<i
+							className="fi fi-plus-a"
+							onClick={() =>
+								setNewHistory((s) => [
+									...s,
+									{ date: moment().format("YYYY-MM-DD HH:mm") },
+								])
+							}></i>
 					</div>
 
 					<div className="column" style={{ textAlign: "right" }}>
