@@ -67,11 +67,11 @@ export function ListeSujets() {
 					padding: "2em",
 					marginTop: "20vh",
 					marginBottom: "20vh",
-					height: "75vh",
+					maxHeight: "70vh",
 					overflowY: "auto",
 				}}>
 				<div className="notification is-info is-light has-text-centered">
-					Faire les choses chaque jour pour garder l&apos;esprit libre
+					Faire les choses chaque jour pour garder l&apos;esprit <b>libre</b>
 				</div>
 				<div className="block">
 					{listeSujets?.liste &&

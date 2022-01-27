@@ -7,9 +7,9 @@ import { Sujet } from "../components/Sujet";
 export default function Home() {
 	moment.locale("fr");
 	return (
-		<div className="container">
+		<div className="container" style={{ overflow: "hidden" }}>
 			<section
-				className="block hero is-primary"
+				className="block hero is-small is-primary"
 				style={{ position: "fixed", top: 0, zIndex: 999, left: 0, right: 0 }}>
 				<div className="hero-body" style={{ textAlign: "center" }}>
 					<p className="title">Héros du quotidien</p>
