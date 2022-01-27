@@ -66,7 +66,7 @@ export function ListeSujets() {
 				style={{
 					padding: "2em",
 					marginTop: "20vh",
-					marginBottom: "10vh",
+					marginBottom: "20vh",
 					height: "75vh",
 					overflowY: "auto",
 				}}>
