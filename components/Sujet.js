@@ -20,7 +20,6 @@ export function Sujet({
 	useEffect(() => {
 		if (newHistory.length > 0) {
 			const newData = { title, history: newHistory, params, created };
-			console.log("Sujet data", newData);
 
 			update(id, newData);
 			status(created, newHistory, setIs);
@@ -28,7 +27,6 @@ export function Sujet({
 	}, [newHistory]);
 
 	useEffect(() => {
-		console.log("Title: ", title);
 		status(created, history, setIs);
 	}, [history]);
 
@@ -67,10 +65,9 @@ export function Sujet({
 }
 
 function status(created, history, setIs) {
-	console.log("retest status");
-	const limitStart = moment().subtract(1, "minutes");
+	const limitStart = moment().subtract(1, "days");
 
-	if (moment(created).isBefore(limitStart)) {
+	if (history?.length || moment(created).isBefore(limitStart)) {
 		if (upADanger(history)) {
 			setIs("is-danger");
 		} else if (upAWarining(history)) {
@@ -80,21 +77,12 @@ function status(created, history, setIs) {
 }
 
 function upAWarining(history) {
-	console.log("upAWarining");
 	if (history?.length > 0) {
-		const limitWarning = moment().subtract(1, "days");
-		const limitDanger = moment().subtract(2, "days");
+		const limitWarning = moment().subtract(20, "hours");
+		const limitDanger = moment().subtract(40, "hours");
 		const last = moment(history[history.length - 1].date);
-		console.log(
-			"upAWarining",
-			last.format("YYYY-MM-DD HH:mm:ss"),
-			limitWarning.format("YYYY-MM-DD HH:mm:ss"),
-			limitDanger.format("YYYY-MM-DD HH:mm:ss"),
-			last.isBetween(limitWarning, limitDanger)
-		);
 
-		if (isBetween(last, limitWarning, limitDanger)) {
-			console.log("upAWarining History: True");
+		if (last.isBetween(limitDanger, limitWarning)) {
 			return true;
 		} else return false;
 	}
@@ -102,22 +90,11 @@ function upAWarining(history) {
 }
 
 function upADanger(history) {
-	console.log("upADanger");
 	if (history?.length > 0) {
-		const limitDanger = moment().subtract(2, "days");
+		const limitDanger = moment().subtract(40, "hours");
 		const last = moment(history[history.length - 1].date);
-		console.log(
-			"upADanger 2",
-			last.format("YYYY-MM-DD HH:mm"),
-			limitDanger.format("YYYY-MM-DD HH:mm")
-		);
 
 		if (last.isBefore(limitDanger)) {
-			console.log(
-				"upADanger History: True",
-				last.format("YYYY-MM-DD HH:mm"),
-				limitDanger.format("YYYY-MM-DD HH:mm")
-			);
 			return true;
 		} else return false;
 	}

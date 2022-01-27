@@ -24,7 +24,7 @@ export function ListeSujets() {
 	const del = (id) => {
 		setListeSujets((s) => {
 			const oldListe = s.liste || [];
-			console.log("del paramsId:", id);
+
 			const filteredList = oldListe.filter((_, paramsId) => id !== paramsId);
 			return {
 				...s,
@@ -49,16 +49,14 @@ export function ListeSujets() {
 
 	useEffect(() => {
 		const base = getBase();
-		console.log("base : ", base);
+
 		if (base) {
-			console.log("recup base");
 			setListeSujets(base);
 		}
 	}, []);
 
 	useEffect(() => {
 		saveBase(listeSujets);
-		console.log("maj base");
 	}, [listeSujets]);
 
 	return (
@@ -113,7 +111,6 @@ function saveBase(data) {
 }
 
 function getData(key) {
-	console.log("getData key:", key);
 	try {
 		const sujetData = localStorage.getItem(key);
 		const formatedData = JSON.parse(sujetData);
