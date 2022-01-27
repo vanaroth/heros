@@ -88,9 +88,7 @@ export function ListeSujets() {
 						))}
 					{!Array.isArray(listeSujets) ||
 						(listeSujets.length === 0 && (
-							<div className="message is-info">
-								<div className="message-body"> Liste vide</div>
-							</div>
+							<div className="notification is-warning is-light">Liste vide</div>
 						))}
 				</div>
 			</div>
