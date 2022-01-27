@@ -65,11 +65,14 @@ export function ListeSujets() {
 				className="content"
 				style={{
 					padding: "2em",
-					marginTop: "25vh",
+					marginTop: "20vh",
 					marginBottom: "10vh",
 					height: "75vh",
 					overflowY: "auto",
 				}}>
+				<div className="notification is-info is-light has-text-centered">
+					Faire les choses chaque jour pour garder l&apos;esprit libre
+				</div>
 				<div className="block">
 					{listeSujets?.liste &&
 						Array.isArray(listeSujets.liste) &&

@@ -10,14 +10,12 @@ export default function Home() {
 		<div className="container">
 			<section
 				className="block hero is-primary"
-				style={{ position: "fixed", top: 0, zIndex: 999 }}>
+				style={{ position: "fixed", top: 0, zIndex: 999, left: 0, right: 0 }}>
 				<div className="hero-body" style={{ textAlign: "center" }}>
 					<p className="title">Héros du quotidien</p>
-					<p className="subtitle">
-						Faire les choses chaque jour pour garder l&apos;esprit libre
-					</p>
 				</div>
 			</section>
+
 			<ListeSujets />
 			{/*<div className="content" style={{ padding: "2em" }}>
 				<TriLingeSale />
