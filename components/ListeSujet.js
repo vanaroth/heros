@@ -57,7 +57,7 @@ export function ListeSujets() {
 	}, []);
 
 	useEffect(() => {
-		saveBase(listeSujets);
+		listeSujets?.list?.length > 0 && saveBase(listeSujets);
 
 		//add id and status
 		let tempOrderList =
