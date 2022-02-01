@@ -1,16 +1,19 @@
 import { useState } from "react";
 
-export function MenuParams({ idSujet, del }) {
-	const [isActive, setIsActive] = useState(false);
-
-	const toogleActive = () => setIsActive((s) => !s);
+export function MenuParams({
+	isActive,
+	toggleActive,
+	idSujet,
+	del,
+	toggleDetails,
+}) {
 	return (
 		<div className={"dropdown is-right " + (isActive ? "is-active" : "")}>
 			<div className="dropdown-trigger">
 				<div
 					aria-haspopup="true"
 					aria-controls="dropdown-menu"
-					onClick={toogleActive}>
+					onClick={toggleActive}>
 					<span className="icon is-small">
 						<i className="fi fi-more-v-a"></i>
 					</span>
@@ -22,7 +25,7 @@ export function MenuParams({ idSujet, del }) {
 				role="menu"
 				style={{ textAlign: "left" }}>
 				<div className="dropdown-content">
-					<span className="dropdown-item">
+					<span className="dropdown-item" onClick={toggleDetails}>
 						<i className="fi fi-eye"></i> Details
 					</span>
 					<span className="dropdown-item ">

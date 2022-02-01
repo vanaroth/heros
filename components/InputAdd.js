@@ -1,12 +1,13 @@
 import moment from "moment";
 
-export function InputAdd({ setData, data, onChange, add }) {
+export function InputAdd({ data, onChange, add }) {
 	moment.locale("fr");
 	return (
 		<div className="control columns is-mobile">
 			<div className="column ">
 				<input
 					className="input"
+					name="title"
 					type="text"
 					placeholder="Text input"
 					value={data}
@@ -17,18 +18,7 @@ export function InputAdd({ setData, data, onChange, add }) {
 				className="column is-one-quarter
 
 ">
-				<button
-					className="button is-primary"
-					onClick={(e) => {
-						e.preventDefault();
-						add({
-							title: data,
-							params: {},
-							history: [],
-							created: moment().format("YYYY-MM-DD HH:mm"),
-						});
-						setData("");
-					}}>
+				<button className="button is-primary" onClick={add}>
 					<i className="fi fi-plus-a"></i>
 				</button>
 			</div>

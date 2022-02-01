@@ -3,10 +3,17 @@ import moment from "moment";
 import "bulma/css/bulma.min.css";
 import { MenuParams } from "./MenuParams";
 import { Level } from "./Level";
+import { Modal } from "./Modal";
 
 export function Sujet({
-	id = -1,
-	data: { title = "", history = [], params = { test: "" }, created = "" },
+	data: {
+		id = -1,
+		title = "",
+		history = [],
+		params = { test: "" },
+		created = "",
+		status,
+	},
 	actualStatus = "",
 	update,
 	del,
@@ -14,24 +21,31 @@ export function Sujet({
 }) {
 	moment.locale("fr");
 
-	const [is, setIs] = useState("");
-	const [newHistory, setNewHistory] = useState(history);
+	const [isDetails, setIsDetails] = useState(false);
+	const [isActive, setIsActive] = useState(false);
 
-	useEffect(() => {
-		if (newHistory.length > 0) {
-			const newData = { title, history: newHistory, params, created };
+	const toggleDetails = () => {
+		setIsDetails((s) => {
+			if (s) setIsActive(false);
+			return !s;
+		});
+	};
+	const toggleActive = () => setIsActive((s) => !s);
 
-			update(id, newData);
-			status(created, newHistory, setIs);
-		}
-	}, [newHistory]);
+	const addDone = () => {
+		const oldHistory = Array.isArray(history) ? history : [];
+		const newData = {
+			title,
+			history: [...oldHistory, { date: moment().format("YYYY-MM-DD HH:mm") }],
+			params,
+			created,
+		};
 
-	useEffect(() => {
-		status(created, history, setIs);
-	}, [history]);
+		update(id, newData);
+	};
 
 	return (
-		<div className={"message " + is} {...rest}>
+		<div className={"message " + status} {...rest}>
 			<div className="message-body">
 				<Level
 					left={
@@ -43,65 +57,42 @@ export function Sujet({
 							<div className="level-item">{title}</div>
 							<div className=" tag is-white level-item">{history?.length}</div>
 
-							<i
-								className="fi fi-plus-a"
-								onClick={() =>
-									setNewHistory((s) => [
-										...s,
-										{ date: moment().format("YYYY-MM-DD HH:mm") },
-									])
-								}></i>
+							<i className="fi fi-plus-a" onClick={addDone}></i>
 						</div>
 					}
 					right={
 						<div className="level-right " style={{ textAlign: "right" }}>
-							<MenuParams idSujet={id} del={del} />
+							<MenuParams
+								idSujet={id}
+								del={del}
+								isActive={isActive}
+								toggleActive={toggleActive}
+								toggleDetails={toggleDetails}
+							/>
 						</div>
 					}
 				/>
 			</div>
+			<Modal
+				Component={() => (
+					<div className="box">
+						<div
+							className="block "
+							style={{ fontWeight: "bold", textDecoration: "underline" }}>
+							{title}:
+						</div>
+						<div className="content">
+							<ol>
+								{history.map(({ date }, id) => (
+									<li key={id}>{moment(date).format("DD/MM/YY HH:mm")}</li>
+								))}
+							</ol>
+						</div>
+					</div>
+				)}
+				isActive={isDetails}
+				toggle={toggleDetails}
+			/>
 		</div>
 	);
-}
-
-function status(created, history, setIs) {
-	const limitStart = moment().subtract(1, "days");
-
-	if (history?.length || moment(created).isBefore(limitStart)) {
-		if (upADanger(history)) {
-			setIs("is-danger");
-		} else if (upAWarining(history)) {
-			setIs("is-warning");
-		} else setIs("is-success");
-	}
-}
-
-function upAWarining(history) {
-	if (history?.length > 0) {
-		const limitWarning = moment().subtract(20, "hours");
-		const limitDanger = moment().subtract(40, "hours");
-		const last = moment(history[history.length - 1].date);
-
-		if (last.isBetween(limitDanger, limitWarning)) {
-			return true;
-		} else return false;
-	}
-	return true;
-}
-
-function upADanger(history) {
-	if (history?.length > 0) {
-		const limitDanger = moment().subtract(40, "hours");
-		const last = moment(history[history.length - 1].date);
-
-		if (last.isBefore(limitDanger)) {
-			return true;
-		} else return false;
-	}
-	return true;
-}
-
-function isBetween(date, debut, fin) {
-	if (moment(date).isBetween(debut, fin)) return true;
-	return false;
 }

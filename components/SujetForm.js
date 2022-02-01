@@ -1,10 +1,27 @@
 import { useEffect, useState } from "react";
+import moment from "moment";
 import { Block } from "./bulma/Block";
 import { InputAdd } from "./InputAdd";
 
 export function SujetForm({ isVisible = true, add }) {
-	const [data, setData] = useState("");
-	const handleChange = (e) => setData(e.target.value);
+	moment.locale("fr");
+	const [data, setData] = useState({
+		title: "",
+		created: moment().format("YYYY-MM-DD HH:mm"),
+	});
+	const handleChange = ({ target: { name, value } }) =>
+		setData((s) => ({ ...s, [name]: value }));
+
+	const customAdd = (e) => {
+		e.preventDefault();
+		add({
+			title: data.title,
+			params: {},
+			history: [],
+			created: data.created,
+		});
+		setData("");
+	};
 	return (
 		<form
 			className="box"
@@ -16,11 +33,18 @@ export function SujetForm({ isVisible = true, add }) {
 			</Block>
 			<div className="field">
 				<label className="label">Titre du Sujet</label>
-				<InputAdd
-					data={data}
-					setData={setData}
+				<InputAdd data={data.title} onChange={handleChange} add={customAdd} />
+			</div>
+			<hr />
+			<div className="field">
+				<label className="label">Date creation</label>
+				<input
+					className="input"
+					type="datetime-local"
+					name="created"
+					placeholder="Text input"
+					value={moment(data.created).format("YYYY-MM-DDTHH:MM")}
 					onChange={handleChange}
-					add={add}
 				/>
 			</div>
 		</form>

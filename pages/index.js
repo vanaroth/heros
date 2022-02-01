@@ -3,28 +3,27 @@ import moment from "moment";
 import "bulma/css/bulma.min.css";
 import { ListeSujets } from "../components/ListeSujet";
 import { Sujet } from "../components/Sujet";
+import { bulmaIsActive } from "../functions/bulmaIsActive";
 
 export default function Home() {
 	moment.locale("fr");
+	useEffect(() => bulmaIsActive(), []);
 	return (
 		<div className="container" style={{ overflow: "hidden" }}>
 			<section
 				className="block hero is-small is-primary"
-				style={{ position: "fixed", top: 0, zIndex: 999, left: 0, right: 0 }}>
+				style={{
+					position: "fixed",
+					top: 0,
+					zIndex: "auto",
+					left: 0,
+					right: 0,
+				}}>
 				<div className="hero-body" style={{ textAlign: "center" }}>
 					<p className="title">Héros du quotidien</p>
 				</div>
 			</section>
-
 			<ListeSujets />
-			{/*<div className="content" style={{ padding: "2em" }}>
-				<TriLingeSale />
-				<Sujet title="Machine à faire" />
-				<Sujet title="Linge à plier" />
-				<Sujet title="Vaisselle" />
-				<Sujet title="Repas" />
-				<Sujet title="Course" />
-  </div>*/}
 		</div>
 	);
 }
