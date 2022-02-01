@@ -11,7 +11,6 @@ export function ListeSujets() {
 	const [showForm, setShowForm] = useState(false);
 
 	const add = (newItem) => {
-		console.log("add", newItem);
 		setListeSujets((s) => {
 			const oldList = s.list || [];
 			return {
@@ -36,7 +35,6 @@ export function ListeSujets() {
 	};
 
 	const update = (id, newData) => {
-		console.log("ID: ", id, "newData:", newData);
 		setListeSujets((s) => {
 			let oldList = s.list || [];
 			oldList[id] = newData;
@@ -54,13 +52,11 @@ export function ListeSujets() {
 		const base = getBase();
 
 		if (base) {
-			console.log("Base ok");
 			setListeSujets(base);
 		}
 	}, []);
 
 	useEffect(() => {
-		console.log("listeSujets", listeSujets);
 		saveBase(listeSujets);
 
 		//add id and status
@@ -76,13 +72,13 @@ export function ListeSujets() {
 		for (let encours = 0; encours < tempOrderList.length; encours++) {
 			let plusImportant = encours;
 
-			console.log("	encours: ", encours);
-			console.log("tempOrderList: ", [...tempOrderList]);
+			//console.log("	encours: ", encours);
+			//console.log("tempOrderList: ", [...tempOrderList]);
 			for (let j = encours + 1; j < tempOrderList.length; j++) {
-				console.log("		j: ", j);
+				//console.log("		j: ", j);
 				if (statusMaxImportant(tempOrderList, j, encours)) {
 					plusImportant = j;
-					console.log("			plusImportant: ", plusImportant);
+					//console.log("			plusImportant: ", plusImportant);
 				}
 			}
 
@@ -90,10 +86,10 @@ export function ListeSujets() {
 				let temp = tempOrderList[encours];
 				tempOrderList[encours] = tempOrderList[plusImportant];
 				tempOrderList[plusImportant] = temp;
-				console.log("		on inverse: ", plusImportant, encours);
+				//console.log("		on inverse: ", plusImportant, encours);
 			}
 		}
-		console.log("tempOrderList: ", tempOrderList);
+		//console.log("tempOrderList: ", tempOrderList);
 		setOrderListeSujets(tempOrderList);
 	}, [listeSujets]);
 
@@ -138,19 +134,6 @@ export function ListeSujets() {
 function statusMaxImportant(tab, j, encours) {
 	const valJ = convertStatusToVal(tab[j].status);
 	const valEncours = convertStatusToVal(tab[encours].status);
-	/*console.log("			valJ: ", valJ, "valEncours", valEncours);
-	if (valEncours === valJ) {
-		console.log("				status égal");
-		if (tab[encours].history.length > tab[j].history.length) {
-			console.log(
-				"						diff history encours: ",
-				tab[encours].history.length,
-				"						j:",
-				tab[j].history.length
-			);
-			return true;
-		}
-	}*/
 
 	return valEncours < valJ;
 }
